@@ -12,11 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1B3D6B3A29268F4800418912 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D6B2A29268F4800418912 /* FontAwesome5_Brands.ttf */; };
-		1B3D6B3F29268F4800418912 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D6B2F29268F4800418912 /* FontAwesome5_Solid.ttf */; };
-		1B3D6B4029268F4800418912 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D6B3029268F4800418912 /* FontAwesome5_Regular.ttf */; };
-		1B3D6B4129268F4800418912 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D6B3129268F4800418912 /* FontAwesome.ttf */; };
-		1B3D6B4529268F4800418912 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D6B3529268F4800418912 /* MaterialIcons.ttf */; };
+		1BEB9A222927C7A9009403EB /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1BEB9A212927C7A9009403EB /* Fonts */; };
 		7699B88040F8A987B510C191 /* libPods-Stickify-StickifyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Stickify-StickifyTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -42,11 +38,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Stickify/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Stickify/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Stickify-StickifyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stickify-StickifyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B3D6B2A29268F4800418912 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
-		1B3D6B2F29268F4800418912 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
-		1B3D6B3029268F4800418912 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
-		1B3D6B3129268F4800418912 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		1B3D6B3529268F4800418912 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		1BEB9A212927C7A9009403EB /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Stickify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stickify.debug.xcconfig"; path = "Target Support Files/Pods-Stickify/Pods-Stickify.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Stickify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stickify.release.xcconfig"; path = "Target Support Files/Pods-Stickify/Pods-Stickify.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Stickify-StickifyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stickify-StickifyTests.debug.xcconfig"; path = "Target Support Files/Pods-Stickify-StickifyTests/Pods-Stickify-StickifyTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -96,6 +88,7 @@
 		13B07FAE1A68108700A75B9A /* Stickify */ = {
 			isa = PBXGroup;
 			children = (
+				1BEB9A212927C7A9009403EB /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -104,18 +97,6 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = Stickify;
-			sourceTree = "<group>";
-		};
-		1B3D6B2529268F4800418912 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				1B3D6B2A29268F4800418912 /* FontAwesome5_Brands.ttf */,
-				1B3D6B2F29268F4800418912 /* FontAwesome5_Solid.ttf */,
-				1B3D6B3029268F4800418912 /* FontAwesome5_Regular.ttf */,
-				1B3D6B3129268F4800418912 /* FontAwesome.ttf */,
-				1B3D6B3529268F4800418912 /* MaterialIcons.ttf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -138,7 +119,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				1B3D6B2529268F4800418912 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* Stickify */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* StickifyTests */,
@@ -265,12 +245,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B3D6B4129268F4800418912 /* FontAwesome.ttf in Resources */,
-				1B3D6B4029268F4800418912 /* FontAwesome5_Regular.ttf in Resources */,
+				1BEB9A222927C7A9009403EB /* Fonts in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				1B3D6B3A29268F4800418912 /* FontAwesome5_Brands.ttf in Resources */,
-				1B3D6B4529268F4800418912 /* MaterialIcons.ttf in Resources */,
-				1B3D6B3F29268F4800418912 /* FontAwesome5_Solid.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
