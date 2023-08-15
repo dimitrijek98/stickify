@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {APP_GRAY, APP_PRIMARY} from '../../_shared/theme/appColors';
+import {APP_GRAY, APP_PRIMARY} from '_shared/theme/appColors';
 
 const styles = StyleSheet.create({
   container: {

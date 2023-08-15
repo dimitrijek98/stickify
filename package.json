@@ -1,5 +1,5 @@
 {
-  "name": "Stickify",
+  "name": "stickify",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -31,11 +31,18 @@
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@tsconfig/react-native": "^3.0.2",
+    "@types/jest": "^29.5.3",
+    "@types/react": "^18.2.20",
+    "@types/react-native-vector-icons": "^6.4.14",
+    "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^26.6.3",
+    "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "0.72.3",
-    "react-test-renderer": "18.1.0"
+    "react-test-renderer": "18.1.0",
+    "typescript": "^5.1.6"
   },
   "jest": {
     "preset": "react-native"
