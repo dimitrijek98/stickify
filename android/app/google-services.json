@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "394242624482",
+    "project_id": "stickify-app",
+    "storage_bucket": "stickify-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394242624482:android:5283903155e8e16bc807bb",
+        "android_client_info": {
+          "package_name": "com.stickify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394242624482-jafnmjfkme09vv4uhh39p2q7qtbnc5i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU4RhJHKFFXJMdCMONq2ipd5yxBFLbXr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394242624482-jafnmjfkme09vv4uhh39p2q7qtbnc5i9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
