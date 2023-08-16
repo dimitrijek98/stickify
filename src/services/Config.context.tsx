@@ -2,12 +2,14 @@ import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
 import {availableValues} from '_shared/helpers/trimLineBreaks';
 import album from '_shared/helpers/config.json';
 
-export type StickerState = {
+export type Sticker = {
   collected: boolean;
   label: string;
 };
 
-export type Album = Record<string, Record<string, StickerState>>;
+export type AlbumSection = Record<string, Sticker>;
+
+export type Album = Record<string, AlbumSection>;
 
 export type ConfigType = {
   stickerNumberRegex: RegExp;

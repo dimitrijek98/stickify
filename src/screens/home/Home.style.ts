@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     height: 180,
     margin: 5,
     borderRadius: 7,
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: APP_PRIMARY,
