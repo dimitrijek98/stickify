@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import styles from './home.style';
+import styles from './Home.style';
 import images from 'assets/images';
 
 const HomeScreen = () => {

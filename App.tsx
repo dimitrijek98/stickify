@@ -7,10 +7,9 @@
 
 import React from 'react';
 
-import HomeScreen from 'screens/home/home.screen';
+import HomeScreen from 'screens/home/Home.screen';
 
 function App(): JSX.Element {
-
   return <HomeScreen />;
 }
 
