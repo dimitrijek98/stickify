@@ -1,21 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {APP_GRAY} from '_shared/theme/appColors';
 
-export const albumStyles = StyleSheet.create({
-  sectionContainer: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  sectionList: {
-    paddingTop: 5,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 7,
-  },
+export const stickerItemStyles = StyleSheet.create({
   collectedStickerItem: {
     backgroundColor: '#6cdf9f',
   },
