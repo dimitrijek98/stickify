@@ -10,7 +10,7 @@ import React from 'react';
 import HomeScreen from 'screens/home/Home.screen';
 import ConfigContextProvider from 'services/Config.context';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AlbumPage from 'screens/Album/Album.page';
 import {RootStackParamList} from '_shared/types/ScreenProps';
 
