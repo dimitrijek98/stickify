@@ -1,5 +1,5 @@
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
-import {availableValues} from '_shared/helpers/trimLineBreaks';
+import {AVAILABLE_VALUES} from '_shared/helpers/trimLineBreaks';
 import album from '_shared/helpers/config.json';
 
 export type Sticker = {
@@ -31,7 +31,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
 
   useEffect(() => {
     setAlbumData(album);
-    setStickerNumberRegex(availableValues);
+    setStickerNumberRegex(AVAILABLE_VALUES);
   }, []);
 
   return (

@@ -16,7 +16,9 @@ const HomeScreen: FC<ScreenProps<'Home'>> = ({navigation}) => {
           <MaterialIcons name={'auto-stories'} color={'#fff'} size={50} />
           <Text style={styles.cardText}>Album</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tile}>
+        <TouchableOpacity
+          style={styles.tile}
+          onPress={() => navigation.push('ScanSticker')}>
           <MaterialIcons name={'add-a-photo'} color={'#fff'} size={50} />
           <Text style={styles.cardText}>Skeniraj album</Text>
         </TouchableOpacity>
