@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {APP_GRAY} from '_shared/theme/appColors';
+import {APP_DARK, APP_GRAY} from '_shared/theme/appColors';
 
 export const stickerItemStyles = StyleSheet.create({
   collectedStickerItem: {
@@ -13,5 +13,8 @@ export const stickerItemStyles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: APP_GRAY,
+  },
+  stickerLabel: {
+    color: APP_DARK,
   },
 });

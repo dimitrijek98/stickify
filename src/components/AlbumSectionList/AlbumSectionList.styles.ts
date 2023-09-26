@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {APP_DARK} from '_shared/theme/appColors';
 
 export const albumSectionListStyles = StyleSheet.create({
   sectionContainer: {
@@ -8,6 +9,7 @@ export const albumSectionListStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: APP_DARK,
   },
   sectionList: {
     paddingTop: 5,

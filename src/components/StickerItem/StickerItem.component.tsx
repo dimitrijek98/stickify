@@ -26,7 +26,7 @@ const StickerItem: FC<StickerProps> = ({sticker, stickerNumber}) => {
     <TouchableOpacity
       onPress={() => setCollected(!collected)}
       style={stickerStyle}>
-      <Text>{stickerNumber}</Text>
+      <Text style={stickerItemStyles.stickerLabel}>{stickerNumber}</Text>
     </TouchableOpacity>
   );
 };
