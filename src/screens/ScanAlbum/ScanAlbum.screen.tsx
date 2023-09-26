@@ -7,12 +7,21 @@ import {
 import {trimLineBreaks} from '_shared/helpers/trimLineBreaks';
 import {ConfigContext} from 'services/Config.context';
 import {ScreenProps} from '_shared/types/ScreenProps';
+import {getStickerData} from '_shared/helpers/getStickerData';
+import {getAlbumGroup} from '_shared/helpers/getAlbumData';
+import OverlayLoaderComponent from 'components/OverlayLoader/OverlayLoader.component';
 
 const ScanAlbumScreen: FC<ScreenProps<'ScanAlbum'>> = ({navigation}) => {
-  const {stickerValueRegex, stickerNumberRegex, stickerGroupRegex} =
-    useContext(ConfigContext);
+  const {
+    album,
+    stickerValueRegex,
+    stickerNumberRegex,
+    stickerGroupRegex,
+    changeAlbumSection,
+  } = useContext(ConfigContext);
   const [detectedStickers, setDetectedStickers] = useState<string[]>([]);
   const [detectedStickerGroup, setDetectedStickerGroup] = useState('');
+  const [updatingAlbum, setUpdatingAlbum] = useState(false);
 
   const sortStickerList = (stickerList: string[]) => {
     return stickerList.sort((s1, s2) => {
@@ -92,14 +101,39 @@ const ScanAlbumScreen: FC<ScreenProps<'ScanAlbum'>> = ({navigation}) => {
     );
   };
 
+  const handleScanFinished = () => {
+    setUpdatingAlbum(true);
+    const {stickerGroup} = getStickerData(detectedStickers[0]);
+
+    const albumGroup = getAlbumGroup(album, stickerGroup);
+
+    const missingNumbers = detectedStickers.map(
+      sticker => getStickerData(sticker).stickerNumber,
+    );
+
+    Object.keys(albumGroup).forEach(key => {
+      albumGroup[key].collected = !missingNumbers.includes(key);
+    });
+
+    changeAlbumSection(albumGroup, stickerGroup);
+    setDetectedStickers([]);
+
+    setUpdatingAlbum(false);
+  };
+
   return (
-    <TextRecognitionCameraComponent
-      detectedStickers={detectedStickers}
-      onImageAnalyzed={onPictureAnalyzed}
-      onStickerListElementClick={removeStickerFromList}
-      onCancel={() => navigation.pop()}
-      onConfirm={() => navigation.pop()}
-    />
+    <>
+      <TextRecognitionCameraComponent
+        detectedStickers={detectedStickers}
+        onImageAnalyzed={onPictureAnalyzed}
+        onStickerListElementClick={removeStickerFromList}
+        onCancel={() => navigation.pop()}
+        onConfirm={handleScanFinished}
+      />
+      {updatingAlbum && (
+        <OverlayLoaderComponent label={'Ažuriranje albuma...'} />
+      )}
+    </>
   );
 };
 

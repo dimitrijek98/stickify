@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {
   Camera,
   useCameraDevice,
@@ -18,6 +18,7 @@ import TextRecognition, {
 } from '@react-native-ml-kit/text-recognition';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {APP_DANGER, APP_DARK, APP_SUCCESS} from '_shared/theme/appColors';
+import OverlayLoaderComponent from 'components/OverlayLoader/OverlayLoader.component';
 
 type CameraComponentProps = {
   onImageAnalyzed: (result: TextRecognitionResult) => void;
@@ -37,6 +38,7 @@ const TextRecognitionCameraComponent: FC<CameraComponentProps> = ({
   const device = useCameraDevice('back');
   const camera = useRef<Camera>(null);
   const {hasPermission, requestPermission} = useCameraPermission();
+  const [analyzingImageText, setAnalyzingImageText] = useState(false);
 
   useEffect(() => {
     if (!hasPermission) {
@@ -45,54 +47,65 @@ const TextRecognitionCameraComponent: FC<CameraComponentProps> = ({
   }, [hasPermission, requestPermission]);
 
   const takePicture = async () => {
+    setAnalyzingImageText(true);
+
     const photo = await camera?.current?.takePhoto();
     if (photo) {
       const result = await TextRecognition.recognize(`file://${photo.path}`);
       onImageAnalyzed(result);
     }
+
+    setAnalyzingImageText(false);
   };
 
   if (!hasPermission || !device) {
     return <ActivityIndicator />;
   }
   return (
-    <View style={StyleSheet.absoluteFill}>
-      <Camera
-        ref={camera}
-        style={StyleSheet.absoluteFill}
-        zoom={0}
-        device={device}
-        photo={true}
-        isActive={true}
-      />
-      <View style={cameraStyles.selectedStickersContainer}>
-        <FlatList
-          data={detectedStickers}
-          numColumns={4}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              style={cameraStyles.selectedSticker}
-              onPress={() => onStickerListElementClick(item)}>
-              <Text>{item}</Text>
-              <Text style={cameraStyles.removeSticker}>X</Text>
-            </TouchableOpacity>
-          )}
+    <>
+      <View style={StyleSheet.absoluteFill}>
+        <Camera
+          ref={camera}
+          style={StyleSheet.absoluteFill}
+          zoom={0}
+          device={device}
+          photo={true}
+          isActive={true}
         />
+        <View style={cameraStyles.selectedStickersContainer}>
+          <FlatList
+            data={detectedStickers}
+            numColumns={4}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                style={cameraStyles.selectedSticker}
+                onPress={() => onStickerListElementClick(item)}>
+                <Text>{item}</Text>
+                <Text style={cameraStyles.removeSticker}>X</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+        <View style={cameraStyles.buttonRow}>
+          <TouchableOpacity onPress={onCancel}>
+            <MaterialIcons name={'close'} color={APP_DANGER} size={25} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={cameraStyles.shutterButton}
+            onPress={takePicture}>
+            <MaterialIcons name={'image-search'} color={APP_DARK} size={35} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onConfirm}
+            disabled={!detectedStickers.length}>
+            <MaterialIcons name={'check'} color={APP_SUCCESS} size={25} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={cameraStyles.buttonRow}>
-        <TouchableOpacity onPress={onCancel}>
-          <MaterialIcons name={'close'} color={APP_DANGER} size={25} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={cameraStyles.shutterButton}
-          onPress={takePicture}>
-          <MaterialIcons name={'image-search'} color={APP_DARK} size={35} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onConfirm}>
-          <MaterialIcons name={'check'} color={APP_SUCCESS} size={25} />
-        </TouchableOpacity>
-      </View>
-    </View>
+      {analyzingImageText && (
+        <OverlayLoaderComponent label={'Analiza slike...'} />
+      )}
+    </>
   );
 };
 

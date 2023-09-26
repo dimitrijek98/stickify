@@ -15,6 +15,7 @@ export type ConfigType = {
   stickerNumberRegex: RegExp;
   stickerGroupRegex: RegExp;
   album: Album;
+  changeAlbumSection: (albumSection: AlbumSection, sectionName: string) => void;
 };
 
 const defaultRegex = /([A-Z])* (?:[1-9]|1[0-9])\b/g;
@@ -26,6 +27,7 @@ export const ConfigContext = createContext<ConfigType>({
   stickerNumberRegex: defaultRegex,
   stickerGroupRegex: defaultRegex,
   album: defaultAlbum,
+  changeAlbumSection: () => {},
 });
 
 const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
@@ -52,6 +54,15 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
     stickerValuesExpression,
   ]);
 
+  const changeAlbumSection = (
+    albumSection: AlbumSection,
+    sectionName: string,
+  ) => {
+    const newAlbumData = {...albumData};
+    newAlbumData[sectionName] = albumSection;
+    setAlbumData(newAlbumData);
+  };
+
   return (
     <ConfigContext.Provider
       value={{
@@ -59,6 +70,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
         stickerValueRegex: stickerValueRegex,
         stickerNumberRegex: stickerNumberRegex,
         stickerGroupRegex: stickerGroupRegex,
+        changeAlbumSection: changeAlbumSection,
       }}>
       {children}
     </ConfigContext.Provider>
