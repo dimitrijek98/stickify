@@ -18,7 +18,7 @@ const HomeScreen: FC<ScreenProps<'Home'>> = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tile}
-          onPress={() => navigation.push('ScanSticker')}>
+          onPress={() => navigation.push('ScanAlbum')}>
           <MaterialIcons name={'add-a-photo'} color={'#fff'} size={50} />
           <Text style={styles.cardText}>Skeniraj album</Text>
         </TouchableOpacity>

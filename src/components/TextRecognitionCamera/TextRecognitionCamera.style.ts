@@ -1,14 +1,21 @@
 import {StyleSheet} from 'react-native';
 
 export const cameraStyles = StyleSheet.create({
-  shutterButton: {
+  buttonRow: {
     position: 'absolute',
     bottom: 20,
-    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    width: '100%',
+  },
+  shutterButton: {
     width: 80,
     height: 80,
     backgroundColor: 'white',
     borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   selectedStickersContainer: {
     position: 'absolute',
@@ -18,8 +25,16 @@ export const cameraStyles = StyleSheet.create({
   selectedSticker: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginEnd: 10,
+    flexDirection: 'row',
+    marginEnd: 5,
+    marginBottom: 5,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: 15,
+  },
+  removeSticker: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 15,
+    paddingHorizontal: 3,
+    marginStart: 2,
   },
 });

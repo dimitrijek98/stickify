@@ -13,7 +13,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AlbumPage from 'screens/Album/Album.page';
 import {RootStackParamList} from '_shared/types/ScreenProps';
-import ScanStickerScreen from 'screens/ScanSticker/ScanSticker.screen';
+import ScanAlbumScreen from 'screens/ScanAlbum/ScanAlbum.screen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -31,8 +31,8 @@ function App(): JSX.Element {
 
           <Stack.Screen
             options={{headerShown: false}}
-            name="ScanSticker"
-            component={ScanStickerScreen}
+            name="ScanAlbum"
+            component={ScanAlbumScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
