@@ -4,6 +4,7 @@ export type RootStackParamList = {
   Home: undefined;
   Album: undefined;
   ScanAlbum: undefined;
+  ScanSticker: undefined;
 };
 
 export type ScreenProps<screenKey extends keyof RootStackParamList = 'Home'> =

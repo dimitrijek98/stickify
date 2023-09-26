@@ -22,9 +22,11 @@ const HomeScreen: FC<ScreenProps<'Home'>> = ({navigation}) => {
           <MaterialIcons name={'add-a-photo'} color={'#fff'} size={50} />
           <Text style={styles.cardText}>Skeniraj album</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tile}>
+        <TouchableOpacity
+          style={styles.tile}
+          onPress={() => navigation.push('ScanSticker')}>
           <MaterialIcons name={'image-search'} color={'#fff'} size={50} />
-          <Text style={styles.cardText}>Skeniraj slicicu</Text>
+          <Text style={styles.cardText}>Skeniraj sličicu</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.tile}>
           <MaterialIcons name={'settings'} color={'#fff'} size={50} />
