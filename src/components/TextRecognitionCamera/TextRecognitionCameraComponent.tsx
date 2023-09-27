@@ -26,6 +26,7 @@ type CameraComponentProps = {
   detectedStickers: string[];
   onCancel: () => void;
   onConfirm: () => void;
+  type?: 'album' | 'sticker';
 };
 
 const TextRecognitionCameraComponent: FC<CameraComponentProps> = ({
@@ -34,6 +35,7 @@ const TextRecognitionCameraComponent: FC<CameraComponentProps> = ({
   detectedStickers,
   onCancel,
   onConfirm,
+  type = 'album',
 }) => {
   const device = useCameraDevice('back');
   const camera = useRef<Camera>(null);
@@ -74,6 +76,11 @@ const TextRecognitionCameraComponent: FC<CameraComponentProps> = ({
         />
         <View style={cameraStyles.selectedStickersContainer}>
           <FlatList
+            ListHeaderComponent={
+              <Text>
+                {type === 'album' ? 'Sličice koje nedostaju:' : 'Nove sličice:'}
+              </Text>
+            }
             data={detectedStickers}
             numColumns={4}
             renderItem={({item}) => (

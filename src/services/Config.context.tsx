@@ -1,5 +1,6 @@
 import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
 import albumConfig from 'config/config.json';
+import {getStickerData} from '_shared/helpers/getStickerData';
 
 export type Sticker = {
   collected: boolean;
@@ -16,6 +17,8 @@ export type ConfigType = {
   stickerGroupRegex: RegExp;
   album: Album;
   changeAlbumSection: (albumSection: AlbumSection, sectionName: string) => void;
+  addNewStickers: (newStickers: string[]) => void;
+  toggleStickerCollected: (sticker: string) => void;
 };
 
 const defaultRegex = /([A-Z])* (?:[1-9]|1[0-9])\b/g;
@@ -28,6 +31,8 @@ export const ConfigContext = createContext<ConfigType>({
   stickerGroupRegex: defaultRegex,
   album: defaultAlbum,
   changeAlbumSection: () => {},
+  addNewStickers: () => {},
+  toggleStickerCollected: () => {},
 });
 
 const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
@@ -40,10 +45,10 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   const [stickerValueRegex, setStickerValueRegex] = useState(defaultRegex);
   const [stickerNumberRegex, setStickerNumberRegex] = useState(defaultRegex);
   const [stickerGroupRegex, setStickeGroupRegex] = useState(defaultRegex);
-  const [albumData, setAlbumData] = useState(defaultAlbum);
+  const [albumData, setAlbumData] = useState<Album>(defaultAlbum);
 
   useEffect(() => {
-    setAlbumData(album);
+    setAlbumData(album as Album);
     setStickerValueRegex(new RegExp(stickerValuesExpression, 'g'));
     setStickerNumberRegex(new RegExp(stickerNumbersExpression, 'g'));
     setStickeGroupRegex(new RegExp(stickerGroupExpression, 'g'));
@@ -63,6 +68,25 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
     setAlbumData(newAlbumData);
   };
 
+  const toggleStickerCollected = (sticker: string) => {
+    const {stickerGroup, stickerNumber} = getStickerData(sticker);
+    const newAlbum = {...albumData};
+    newAlbum[stickerGroup][stickerNumber].collected =
+      !newAlbum[stickerGroup][stickerNumber].collected;
+
+    setAlbumData(newAlbum);
+  };
+
+  const addNewStickers = (newStickers: string[]) => {
+    const newAlbum = {...albumData};
+
+    newStickers.forEach(sticker => {
+      toggleStickerCollected(sticker);
+    });
+
+    setAlbumData(newAlbum);
+  };
+
   return (
     <ConfigContext.Provider
       value={{
@@ -71,6 +95,8 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
         stickerNumberRegex: stickerNumberRegex,
         stickerGroupRegex: stickerGroupRegex,
         changeAlbumSection: changeAlbumSection,
+        addNewStickers: addNewStickers,
+        toggleStickerCollected: toggleStickerCollected,
       }}>
       {children}
     </ConfigContext.Provider>

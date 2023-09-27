@@ -10,6 +10,7 @@ import {ScreenProps} from '_shared/types/ScreenProps';
 import {getStickerData} from '_shared/helpers/getStickerData';
 import {getAlbumGroup} from '_shared/helpers/getAlbumData';
 import OverlayLoaderComponent from 'components/OverlayLoader/OverlayLoader.component';
+import {componseStickerValue} from '_shared/helpers/componseStickerValue';
 
 const ScanAlbumScreen: FC<ScreenProps<'ScanAlbum'>> = ({navigation}) => {
   const {
@@ -70,11 +71,11 @@ const ScanAlbumScreen: FC<ScreenProps<'ScanAlbum'>> = ({navigation}) => {
       bp2?.match(stickerGroupRegex) &&
       bp2 === stickerGroup
     ) {
-      return `${bp2} ${bp1}`;
+      return componseStickerValue(bp2, bp1);
     }
 
     if (!bp2 && bp1?.match(stickerNumberRegex)) {
-      return `${stickerGroup} ${bp1}`;
+      return componseStickerValue(stickerGroup, bp1);
     }
 
     return null;
