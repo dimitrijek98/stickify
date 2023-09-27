@@ -1,5 +1,13 @@
-import React, {createContext, FC, ReactNode, useEffect, useState} from 'react';
+import React, {
+  createContext,
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import albumConfig from 'config/config.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getStickerData} from '_shared/helpers/getStickerData';
 
 export type Sticker = {
@@ -25,6 +33,8 @@ const defaultRegex = /([A-Z])* (?:[1-9]|1[0-9])\b/g;
 
 const defaultAlbum: Album = {};
 
+const ALBUM_STORAGE_KEY = 'saved_album';
+
 export const ConfigContext = createContext<ConfigType>({
   stickerValueRegex: defaultRegex,
   stickerNumberRegex: defaultRegex,
@@ -44,16 +54,34 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   } = albumConfig;
   const [stickerValueRegex, setStickerValueRegex] = useState(defaultRegex);
   const [stickerNumberRegex, setStickerNumberRegex] = useState(defaultRegex);
-  const [stickerGroupRegex, setStickeGroupRegex] = useState(defaultRegex);
+  const [stickerGroupRegex, setStickerGroupRegex] = useState(defaultRegex);
   const [albumData, setAlbumData] = useState<Album>(defaultAlbum);
 
+  const getSavedAlbum = useCallback(async () => {
+    const savedAlbum = await AsyncStorage.getItem(ALBUM_STORAGE_KEY);
+    if (savedAlbum) {
+      setAlbumData(JSON.parse(savedAlbum));
+    } else {
+      setAlbumData(album as Album);
+    }
+  }, [album]);
+
+  const saveAlbumChanges = (newAlbum: Album) => {
+    setAlbumData(newAlbum);
+    AsyncStorage.setItem(ALBUM_STORAGE_KEY, JSON.stringify(newAlbum));
+  };
+
   useEffect(() => {
-    setAlbumData(album as Album);
+    getSavedAlbum();
+  }, [getSavedAlbum]);
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {
     setStickerValueRegex(new RegExp(stickerValuesExpression, 'g'));
     setStickerNumberRegex(new RegExp(stickerNumbersExpression, 'g'));
-    setStickeGroupRegex(new RegExp(stickerGroupExpression, 'g'));
+    setStickerGroupRegex(new RegExp(stickerGroupExpression, 'g'));
   }, [
-    album,
     stickerGroupExpression,
     stickerNumbersExpression,
     stickerValuesExpression,
@@ -65,7 +93,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   ) => {
     const newAlbumData = {...albumData};
     newAlbumData[sectionName] = albumSection;
-    setAlbumData(newAlbumData);
+    saveAlbumChanges(newAlbumData);
   };
 
   const toggleStickerCollected = (sticker: string) => {
@@ -74,7 +102,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
     newAlbum[stickerGroup][stickerNumber].collected =
       !newAlbum[stickerGroup][stickerNumber].collected;
 
-    setAlbumData(newAlbum);
+    saveAlbumChanges(newAlbum);
   };
 
   const addNewStickers = (newStickers: string[]) => {
@@ -84,7 +112,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
       toggleStickerCollected(sticker);
     });
 
-    setAlbumData(newAlbum);
+    saveAlbumChanges(newAlbum);
   };
 
   return (
