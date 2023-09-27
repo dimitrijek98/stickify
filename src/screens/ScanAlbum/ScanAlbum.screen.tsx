@@ -118,6 +118,7 @@ const ScanAlbumScreen: FC<ScreenProps<'ScanAlbum'>> = ({navigation}) => {
 
     changeAlbumSection(albumGroup, stickerGroup);
     setDetectedStickers([]);
+    setDetectedStickerGroup('');
 
     setUpdatingAlbum(false);
   };
