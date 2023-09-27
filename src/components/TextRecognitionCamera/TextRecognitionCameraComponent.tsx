@@ -74,25 +74,29 @@ const TextRecognitionCameraComponent: FC<CameraComponentProps> = ({
           photo={true}
           isActive={true}
         />
-        <View style={cameraStyles.selectedStickersContainer}>
-          <FlatList
-            ListHeaderComponent={
-              <Text>
-                {type === 'album' ? 'Sličice koje nedostaju:' : 'Nove sličice:'}
-              </Text>
-            }
-            data={detectedStickers}
-            numColumns={4}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                style={cameraStyles.selectedSticker}
-                onPress={() => onStickerListElementClick(item)}>
-                <Text>{item}</Text>
-                <Text style={cameraStyles.removeSticker}>X</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+        {!!detectedStickers.length && (
+          <View style={cameraStyles.selectedStickersContainer}>
+            <FlatList
+              ListHeaderComponent={
+                <Text>
+                  {type === 'album'
+                    ? 'Sličice koje nedostaju:'
+                    : 'Nove sličice:'}
+                </Text>
+              }
+              data={detectedStickers}
+              numColumns={4}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  style={cameraStyles.selectedSticker}
+                  onPress={() => onStickerListElementClick(item)}>
+                  <Text>{item}</Text>
+                  <Text style={cameraStyles.removeSticker}>X</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        )}
         <View style={cameraStyles.buttonRow}>
           <TouchableOpacity onPress={onCancel}>
             <MaterialIcons name={'close'} color={APP_DANGER} size={25} />
