@@ -1,16 +1,20 @@
 import {Sticker} from 'services/Config.context';
-import React, {FC, useMemo, useState} from 'react';
+import React, {FC, useMemo} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {stickerItemStyles} from 'components/StickerItem/StickerItem.styles';
 
 type StickerProps = {
   sticker: Sticker;
   stickerNumber: string;
+  onStickerClick: (stickerNumber: string) => void;
 };
 
-const StickerItem: FC<StickerProps> = ({sticker, stickerNumber}) => {
-  const [collected, setCollected] = useState(sticker.collected);
-
+const StickerItem: FC<StickerProps> = ({
+  sticker,
+  stickerNumber,
+  onStickerClick,
+}) => {
+  const {collected} = sticker;
   const stickerStyle = useMemo(
     () =>
       collected
@@ -24,7 +28,7 @@ const StickerItem: FC<StickerProps> = ({sticker, stickerNumber}) => {
 
   return (
     <TouchableOpacity
-      onPress={() => setCollected(!collected)}
+      onPress={() => onStickerClick(stickerNumber)}
       style={stickerStyle}>
       <Text style={stickerItemStyles.stickerLabel}>{stickerNumber}</Text>
     </TouchableOpacity>

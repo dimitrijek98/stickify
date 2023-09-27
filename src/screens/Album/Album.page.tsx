@@ -5,12 +5,12 @@ import {ScreenProps} from '_shared/types/ScreenProps';
 import AlbumSectionList from 'components/AlbumSectionList/AlbumSectionList';
 
 const AlbumPage: FC<ScreenProps<'Album'>> = () => {
-  const config = useContext(ConfigContext);
+  const {album} = useContext(ConfigContext);
 
   return (
     <SafeAreaView>
       <FlatList
-        data={Object.entries(config.album)}
+        data={Object.entries(album)}
         keyExtractor={item => {
           const [sectionKey] = item;
           return sectionKey;

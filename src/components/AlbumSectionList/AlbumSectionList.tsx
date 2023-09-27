@@ -1,8 +1,9 @@
-import {AlbumSection} from 'services/Config.context';
-import React, {FC} from 'react';
+import {AlbumSection, ConfigContext} from 'services/Config.context';
+import React, {FC, useContext} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import StickerItem from 'components/StickerItem/StickerItem.component';
 import {albumSectionListStyles} from 'components/AlbumSectionList/AlbumSectionList.styles';
+import {componseStickerValue} from '_shared/helpers/componseStickerValue';
 
 type AlbumSectionProps = {
   section: AlbumSection;
@@ -10,6 +11,12 @@ type AlbumSectionProps = {
 };
 
 const AlbumSectionList: FC<AlbumSectionProps> = ({section, sectionName}) => {
+  const {toggleStickerCollected} = useContext(ConfigContext);
+
+  const handleOnStickerClick = (stickerNumber: string) => {
+    toggleStickerCollected(componseStickerValue(sectionName, stickerNumber));
+  };
+
   return (
     <ScrollView contentContainerStyle={albumSectionListStyles.sectionContainer}>
       <Text style={albumSectionListStyles.sectionTitle}>{sectionName}</Text>
@@ -21,6 +28,7 @@ const AlbumSectionList: FC<AlbumSectionProps> = ({section, sectionName}) => {
               key={`${sectionName}-${stickerNumber}`}
               sticker={sticker}
               stickerNumber={stickerNumber}
+              onStickerClick={handleOnStickerClick}
             />
           );
         })}
