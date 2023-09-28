@@ -72,50 +72,6 @@
       "18": {
         "label": "asdasd",
         "collected": false
-      },
-      "19": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "20": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "21": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "22": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "23": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "24": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "25": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "26": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "27": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "28": {
-        "label": "asdasd",
-        "collected": false
-      },
-      "29": {
-        "label": "asdasd",
-        "collected": false
       }
     },
     "QAT": {
@@ -2615,7 +2571,7 @@
       }
     }
   },
-  "stickerValuesExpression": "(FWC (?:[0-9]|1[0-9]|2[0-4])(?:, (?:[0-9]|1[0-9]))*|(?:QAT|ECU|SEN|NED|ENG|IRN|USA|WAL|ARG|KSA|MEX|POL|FRA|AUS|DEN|TUN|ESP|CRC|GER|JPN|BEL|CAN|MAR|CRO|BRA|SRB|SUI|CMR|POR|GHA|URU|KOR) (?:[1-9]|1[0-9]))\\b",
-  "stickerNumbersExpression": "^(?:[1-9]|1\\d|2[0-4])$",
+  "stickerValuesExpression": "(FWC (?:[0-9]|1[0-8])(?:, (?:[0-9]|1[0-9]))*|(?:QAT|ECU|SEN|NED|ENG|IRN|USA|WAL|ARG|KSA|MEX|POL|FRA|AUS|DEN|TUN|ESP|CRC|GER|JPN|BEL|CAN|MAR|CRO|BRA|SRB|SUI|CMR|POR|GHA|URU|KOR) (?:[1-9]|1[0-9]))\\b",
+  "stickerNumbersExpression": "^(?:[1-9]|1\\d)$",
   "stickerGroupExpression": "(?:FWC|QAT|ECU|SEN|NED|ENG|IRN|USA|WAL|ARG|KSA|MEX|POL|FRA|AUS|DEN|TUN|ESP|CRC|GER|JPN|BEL|CAN|MAR|CRO|BRA|SRB|SUI|CMR|POR|GHA|URU|KOR)\\b"
 }

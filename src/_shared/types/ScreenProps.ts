@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Album: undefined;
   ScanAlbum: undefined;
   ScanSticker: undefined;
+  Settings: undefined;
 };
 
 export type ScreenProps<screenKey extends keyof RootStackParamList = 'Home'> =

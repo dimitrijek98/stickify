@@ -15,9 +15,16 @@ import AlbumPage from 'screens/Album/Album.page';
 import {RootStackParamList} from '_shared/types/ScreenProps';
 import ScanAlbumScreen from 'screens/ScanAlbum/ScanAlbum.screen';
 import ScanStickerScreen from 'screens/ScanSticker/ScanSticker.screen';
+import SettingsScreen from 'screens/Settings/Settings.screen';
+import Toast, {BaseToast, ToastConfig} from 'react-native-toast-message';
+import {APP_PRIMARY} from '_shared/theme/appColors';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
+const toastConfig: ToastConfig = {
+  success: props => (
+    <BaseToast {...props} style={{borderLeftColor: APP_PRIMARY}} />
+  ),
+};
 function App(): JSX.Element {
   return (
     <ConfigContextProvider>
@@ -40,8 +47,14 @@ function App(): JSX.Element {
             name="ScanSticker"
             component={ScanStickerScreen}
           />
+          <Stack.Screen
+            options={{headerShown: true, headerTitle: 'Opcije'}}
+            name="Settings"
+            component={SettingsScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
+      <Toast config={toastConfig} />
     </ConfigContextProvider>
   );
 }

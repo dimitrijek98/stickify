@@ -9,6 +9,7 @@ import React, {
 import albumConfig from 'config/config.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getStickerData} from '_shared/helpers/getStickerData';
+import Toast from 'react-native-toast-message';
 
 export type Sticker = {
   collected: boolean;
@@ -27,6 +28,7 @@ export type ConfigType = {
   changeAlbumSection: (albumSection: AlbumSection, sectionName: string) => void;
   addNewStickers: (newStickers: string[]) => void;
   toggleStickerCollected: (sticker: string) => void;
+  setAlbumState: (state: 'completed' | 'empty') => void;
 };
 
 const defaultRegex = /([A-Z])* (?:[1-9]|1[0-9])\b/g;
@@ -43,6 +45,7 @@ export const ConfigContext = createContext<ConfigType>({
   changeAlbumSection: () => {},
   addNewStickers: () => {},
   toggleStickerCollected: () => {},
+  setAlbumState: () => {},
 });
 
 const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
@@ -93,6 +96,14 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   ) => {
     const newAlbumData = {...albumData};
     newAlbumData[sectionName] = albumSection;
+
+    Toast.show({
+      position: 'bottom',
+      type: 'success',
+      text1: 'Album azuriran',
+      text2: `Uspešno ste azurirali ${sectionName}`,
+    });
+
     saveAlbumChanges(newAlbumData);
   };
 
@@ -112,7 +123,42 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
       toggleStickerCollected(sticker);
     });
 
+    Toast.show({
+      position: 'bottom',
+      type: 'success',
+      text1: 'Sličice dodate',
+      text2: `Uspešno ste dodali ${newStickers.length} sličica`,
+    });
+
     saveAlbumChanges(newAlbum);
+  };
+
+  const setAlbumState = (state: 'completed' | 'empty') => {
+    if (state === 'empty') {
+      saveAlbumChanges(album as Album);
+      Toast.show({
+        position: 'bottom',
+        type: 'success',
+        text1: 'Album resetovan',
+        text2: 'Uspešno ste resetovali album',
+      });
+    } else {
+      const fullAlbum = {...albumData};
+
+      Object.keys(albumData).forEach(key => {
+        Object.keys(albumData[key]).forEach(groupKey => {
+          fullAlbum[key][groupKey].collected = true;
+        });
+      });
+
+      Toast.show({
+        position: 'bottom',
+        type: 'success',
+        text1: 'Album kompletiran',
+        text2: 'Čestitamo! Sakupili ste sve sličice',
+      });
+      saveAlbumChanges(fullAlbum);
+    }
   };
 
   return (
@@ -125,6 +171,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
         changeAlbumSection: changeAlbumSection,
         addNewStickers: addNewStickers,
         toggleStickerCollected: toggleStickerCollected,
+        setAlbumState: setAlbumState,
       }}>
       {children}
     </ConfigContext.Provider>
