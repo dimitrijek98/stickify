@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "android-prod": "react-native run-android --variant=release",
+    "android-prod": "react-native run-android --mode release",
     "android-build": "cd android && ./gradlew assembleRelease",
     "android-clear": "cd android && ./gradlew clean",
     "android-studio": "open -a /Applications/Android\\ Studio.app",
