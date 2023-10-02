@@ -19,7 +19,7 @@ type ModalProps = {
 
 const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
   const cameraDevice = useCameraDevice('back');
-  const {album, setAlbumState} = useContext(ConfigContext);
+  const {album, setAlbumState, setConnectedApp} = useContext(ConfigContext);
   const camera = useRef<Camera>(null);
   const [scanError, setScanError] = useState('');
   const [scanningCode, setScanningCode] = useState(false);
@@ -38,11 +38,13 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
     const photo = await camera?.current?.takePhoto();
     const result = await BarcodeScanning.scan(`file://${photo?.path}`);
     setScanningCode(false);
-
+    console.log(result);
     if (!result?.[0]?.value) {
       setScanError('Skeniranje nije uspelo, Probajte ponovo');
       return;
     }
+    setConnectedApp(result[0].value);
+    setScanError('');
     setModalProps({visible: false, type: undefined});
   };
 
@@ -104,6 +106,7 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
       <Modal
         visible={modalProps.visible}
         transparent={false}
+        onRequestClose={() => setScanError('')}
         animationType={'slide'}>
         <View style={settingsStyle.modalContainer}>
           {modalProps.type === 'share' && (

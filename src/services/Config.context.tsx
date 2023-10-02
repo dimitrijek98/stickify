@@ -8,9 +8,11 @@ import React, {
 } from 'react';
 import albumConfig from 'config/config.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import firestore from '@react-native-firebase/firestore';
 import {getStickerData} from '_shared/helpers/getStickerData';
 import Toast from 'react-native-toast-message';
 import _ from 'lodash';
+import {getUniqueId} from 'react-native-device-info';
 export type Sticker = {
   collected: boolean;
   label: string;
@@ -25,10 +27,12 @@ export type ConfigType = {
   stickerNumberRegex: RegExp;
   stickerGroupRegex: RegExp;
   album: Album;
+  albumKeysOrder: string[];
   changeAlbumSection: (albumSection: AlbumSection, sectionName: string) => void;
   addNewStickers: (newStickers: string[]) => void;
   toggleStickerCollected: (sticker: string) => void;
   setAlbumState: (state: 'completed' | 'empty') => void;
+  setConnectedApp: (connectedAppId: string) => void;
 };
 
 const defaultRegex = /([A-Z])* (?:[1-9]|1[0-9])\b/g;
@@ -36,16 +40,19 @@ const defaultRegex = /([A-Z])* (?:[1-9]|1[0-9])\b/g;
 const defaultAlbum: Album = {};
 
 const ALBUM_STORAGE_KEY = 'saved_album';
+const CONNECTED_APP_ID = 'connected_app_id';
 
 export const ConfigContext = createContext<ConfigType>({
   stickerValueRegex: defaultRegex,
   stickerNumberRegex: defaultRegex,
   stickerGroupRegex: defaultRegex,
   album: defaultAlbum,
+  albumKeysOrder: [],
   changeAlbumSection: () => {},
   addNewStickers: () => {},
   toggleStickerCollected: () => {},
   setAlbumState: () => {},
+  setConnectedApp: () => {},
 });
 
 const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
@@ -59,28 +66,42 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   const [stickerNumberRegex, setStickerNumberRegex] = useState(defaultRegex);
   const [stickerGroupRegex, setStickerGroupRegex] = useState(defaultRegex);
   const [albumData, setAlbumData] = useState<Album>(defaultAlbum);
+  const [albumKeyOrder, setAlbumKeyOrder] = useState<string[]>([]);
+  const [connectedAppId, setConnectedAppId] = useState('');
 
   const getSavedAlbum = useCallback(async () => {
+    setAlbumKeyOrder(Object.keys(album));
     const savedAlbum = await AsyncStorage.getItem(ALBUM_STORAGE_KEY);
     if (savedAlbum) {
-      setAlbumData(JSON.parse(savedAlbum));
+      saveAlbumChanges(JSON.parse(savedAlbum));
     } else {
       const emptyAlbum = _.cloneDeep(album);
-      setAlbumData(emptyAlbum as Album);
+      saveAlbumChanges(emptyAlbum as Album);
     }
   }, [album]);
 
-  const saveAlbumChanges = (newAlbum: Album) => {
-    setAlbumData(newAlbum);
-
-    AsyncStorage.setItem(ALBUM_STORAGE_KEY, JSON.stringify(newAlbum));
-  };
-
   useEffect(() => {
     getSavedAlbum();
+    AsyncStorage.getItem(CONNECTED_APP_ID).then(key => {
+      if (key) {
+        setConnectedAppId(key);
+      }
+    });
   }, [getSavedAlbum]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Users')
+      .doc(connectedAppId)
+      .onSnapshot(documentSnapshot => {
+        if (documentSnapshot?.data()) {
+          saveAlbumChanges(documentSnapshot.data() as Album);
+        }
+      });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [album, connectedAppId]);
 
   useEffect(() => {
     setStickerValueRegex(new RegExp(stickerValuesExpression, 'g'));
@@ -91,6 +112,16 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
     stickerNumbersExpression,
     stickerValuesExpression,
   ]);
+
+  const saveAlbumChanges = (newAlbum: Album) => {
+    setAlbumData(newAlbum);
+    console.log(newAlbum);
+
+    AsyncStorage.setItem(ALBUM_STORAGE_KEY, JSON.stringify(newAlbum));
+    getUniqueId().then(id => {
+      firestore().collection('Users').doc(id).set(newAlbum);
+    });
+  };
 
   const changeAlbumSection = (
     albumSection: AlbumSection,
@@ -163,10 +194,16 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
     saveAlbumChanges(customisedAlbum);
   };
 
+  const setConnectedApp = (appId: string) => {
+    setConnectedAppId(appId);
+    AsyncStorage.setItem(CONNECTED_APP_ID, appId);
+  };
+
   return (
     <ConfigContext.Provider
       value={{
         album: albumData,
+        albumKeysOrder: albumKeyOrder,
         stickerValueRegex: stickerValueRegex,
         stickerNumberRegex: stickerNumberRegex,
         stickerGroupRegex: stickerGroupRegex,
@@ -174,6 +211,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
         addNewStickers: addNewStickers,
         toggleStickerCollected: toggleStickerCollected,
         setAlbumState: setAlbumState,
+        setConnectedApp: setConnectedApp,
       }}>
       {children}
     </ConfigContext.Provider>

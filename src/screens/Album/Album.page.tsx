@@ -1,16 +1,23 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useMemo} from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
-import {ConfigContext} from 'services/Config.context';
+import {AlbumSection, ConfigContext} from 'services/Config.context';
 import {ScreenProps} from '_shared/types/ScreenProps';
 import AlbumSectionList from 'components/AlbumSectionList/AlbumSectionList';
 
 const AlbumPage: FC<ScreenProps<'Album'>> = () => {
-  const {album} = useContext(ConfigContext);
+  const {album, albumKeysOrder} = useContext(ConfigContext);
+  const data = useMemo(() => {
+    const returnData: [string, AlbumSection][] = [];
+    albumKeysOrder.forEach(key => {
+      returnData.push([key, album[key]]);
+    });
+    return returnData;
+  }, [album, albumKeysOrder]);
 
   return (
     <SafeAreaView>
       <FlatList
-        data={Object.entries(album)}
+        data={data}
         keyExtractor={item => {
           const [sectionKey] = item;
           return sectionKey;
