@@ -10,6 +10,7 @@ import QRCode from 'react-native-qrcode-svg';
 import BarcodeScanning from '@react-native-ml-kit/barcode-scanning';
 import {Camera, useCameraDevice} from 'react-native-vision-camera';
 import {ConfigContext} from 'services/Config.context';
+import StatsComponent from 'components/Stats/Stats.component';
 
 type ModalProps = {
   visible: boolean;
@@ -18,7 +19,7 @@ type ModalProps = {
 
 const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
   const cameraDevice = useCameraDevice('back');
-  const {setAlbumState} = useContext(ConfigContext);
+  const {album, setAlbumState} = useContext(ConfigContext);
   const camera = useRef<Camera>(null);
   const [scanError, setScanError] = useState('');
   const [scanningCode, setScanningCode] = useState(false);
@@ -65,6 +66,10 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
             onPress={() => setModalProps({visible: true, type: 'share'})}
           />
         </View>
+      </View>
+
+      <View style={settingsStyle.section}>
+        <StatsComponent album={album} />
       </View>
 
       <View style={settingsStyle.section}>
