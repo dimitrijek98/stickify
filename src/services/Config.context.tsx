@@ -10,7 +10,7 @@ import albumConfig from 'config/config.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getStickerData} from '_shared/helpers/getStickerData';
 import Toast from 'react-native-toast-message';
-
+import _ from 'lodash';
 export type Sticker = {
   collected: boolean;
   label: string;
@@ -65,12 +65,14 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
     if (savedAlbum) {
       setAlbumData(JSON.parse(savedAlbum));
     } else {
-      setAlbumData(album as Album);
+      const emptyAlbum = _.cloneDeep(album);
+      setAlbumData(emptyAlbum as Album);
     }
   }, [album]);
 
   const saveAlbumChanges = (newAlbum: Album) => {
     setAlbumData(newAlbum);
+
     AsyncStorage.setItem(ALBUM_STORAGE_KEY, JSON.stringify(newAlbum));
   };
 
@@ -94,7 +96,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
     albumSection: AlbumSection,
     sectionName: string,
   ) => {
-    const newAlbumData = {...albumData};
+    const newAlbumData = _.cloneDeep(albumData);
     newAlbumData[sectionName] = albumSection;
 
     Toast.show({
@@ -109,7 +111,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
 
   const toggleStickerCollected = (sticker: string) => {
     const {stickerGroup, stickerNumber} = getStickerData(sticker);
-    const newAlbum = {...albumData};
+    const newAlbum = _.cloneDeep(albumData);
     newAlbum[stickerGroup][stickerNumber].collected =
       !newAlbum[stickerGroup][stickerNumber].collected;
 
@@ -117,10 +119,11 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   };
 
   const addNewStickers = (newStickers: string[]) => {
-    const newAlbum = {...albumData};
+    const newAlbum = _.cloneDeep(albumData);
 
     newStickers.forEach(sticker => {
-      toggleStickerCollected(sticker);
+      const {stickerGroup, stickerNumber} = getStickerData(sticker);
+      newAlbum[stickerGroup][stickerNumber].collected = true;
     });
 
     Toast.show({
@@ -134,8 +137,15 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   };
 
   const setAlbumState = (state: 'completed' | 'empty') => {
+    const customisedAlbum = _.cloneDeep(albumData);
+
+    Object.keys(albumData).forEach(key => {
+      Object.keys(albumData[key]).forEach(groupKey => {
+        customisedAlbum[key][groupKey].collected = state === 'completed';
+      });
+    });
+
     if (state === 'empty') {
-      saveAlbumChanges(album as Album);
       Toast.show({
         position: 'bottom',
         type: 'success',
@@ -143,22 +153,14 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
         text2: 'Uspešno ste resetovali album',
       });
     } else {
-      const fullAlbum = {...albumData};
-
-      Object.keys(albumData).forEach(key => {
-        Object.keys(albumData[key]).forEach(groupKey => {
-          fullAlbum[key][groupKey].collected = true;
-        });
-      });
-
       Toast.show({
         position: 'bottom',
         type: 'success',
         text1: 'Album kompletiran',
         text2: 'Čestitamo! Sakupili ste sve sličice',
       });
-      saveAlbumChanges(fullAlbum);
     }
+    saveAlbumChanges(customisedAlbum);
   };
 
   return (
