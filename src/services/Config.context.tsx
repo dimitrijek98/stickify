@@ -115,7 +115,6 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
 
   const saveAlbumChanges = (newAlbum: Album) => {
     setAlbumData(newAlbum);
-    console.log(newAlbum);
 
     AsyncStorage.setItem(ALBUM_STORAGE_KEY, JSON.stringify(newAlbum));
     getUniqueId().then(id => {

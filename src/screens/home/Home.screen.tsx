@@ -36,6 +36,7 @@ const HomeScreen: FC<ScreenProps> = ({navigation}) => {
       <View style={styles.cardsContainer}>
         {homeScreenNavigationButtons.map(button => (
           <TouchableOpacity
+            key={button.navigationKey}
             onPress={() => navigation.push(button.navigationKey)}
             style={styles.tile}>
             <MaterialIcons name={button.icon} color={'#fff'} size={50} />

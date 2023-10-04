@@ -38,7 +38,6 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
     const photo = await camera?.current?.takePhoto();
     const result = await BarcodeScanning.scan(`file://${photo?.path}`);
     setScanningCode(false);
-    console.log(result);
     if (!result?.[0]?.value) {
       setScanError('Skeniranje nije uspelo, Probajte ponovo');
       return;
