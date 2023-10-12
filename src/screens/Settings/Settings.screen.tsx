@@ -1,16 +1,27 @@
 import React, {FC, useContext, useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Button, Modal, ScrollView, View} from 'react-native';
+import {
+  Button,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {ScreenProps} from '_shared/types/ScreenProps';
 import {getUniqueId} from 'react-native-device-info';
 import BodyText from 'components/BodyText/BodyText.component';
 import HeadingText from 'components/HeadingText/HeadingText.component';
 import {settingsStyle} from 'screens/Settings/Settings.style';
-import {APP_DANGER, APP_DARK, APP_PRIMARY} from '_shared/theme/appColors';
+import {APP_DANGER, APP_PRIMARY} from '_shared/theme/appColors';
 import QRCode from 'react-native-qrcode-svg';
-import BarcodeScanning from '@react-native-ml-kit/barcode-scanning';
-import {Camera, useCameraDevice} from 'react-native-vision-camera';
+import {
+  Camera,
+  useCameraDevice,
+  useCodeScanner,
+} from 'react-native-vision-camera';
 import {ConfigContext} from 'services/Config.context';
 import StatsComponent from 'components/Stats/Stats.component';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 type ModalProps = {
   visible: boolean;
@@ -21,8 +32,6 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
   const cameraDevice = useCameraDevice('back');
   const {album, setAlbumState, setConnectedApp} = useContext(ConfigContext);
   const camera = useRef<Camera>(null);
-  const [scanError, setScanError] = useState('');
-  const [scanningCode, setScanningCode] = useState(false);
   const [modalProps, setModalProps] = useState<ModalProps>({
     visible: false,
     type: undefined,
@@ -33,19 +42,19 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
     getUniqueId().then(id => setDeviceId(id));
   }, []);
 
-  const handleQRCodeScanned = async () => {
-    setScanningCode(true);
-    const photo = await camera?.current?.takePhoto();
-    const result = await BarcodeScanning.scan(`file://${photo?.path}`);
-    setScanningCode(false);
-    if (!result?.[0]?.value) {
-      setScanError('Skeniranje nije uspelo, Probajte ponovo');
-      return;
-    }
-    setConnectedApp(result[0].value);
-    setScanError('');
+  const handleModalClose = () => {
     setModalProps({visible: false, type: undefined});
   };
+
+  const handleQRCodeScanned = useCodeScanner({
+    codeTypes: ['qr'],
+    onCodeScanned: codes => {
+      if (codes[0].value) {
+        setConnectedApp(codes[0].value);
+        handleModalClose();
+      }
+    },
+  });
 
   return (
     <ScrollView contentContainerStyle={settingsStyle.container}>
@@ -105,7 +114,6 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
       <Modal
         visible={modalProps.visible}
         transparent={false}
-        onRequestClose={() => setScanError('')}
         animationType={'slide'}>
         <View style={settingsStyle.modalContainer}>
           {modalProps.type === 'share' && (
@@ -121,34 +129,20 @@ const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
           {cameraDevice && modalProps.type === 'scan' && (
             <Camera
               ref={camera}
-              style={settingsStyle.cameraStyle}
+              style={StyleSheet.absoluteFill}
               zoom={0}
               device={cameraDevice}
+              codeScanner={handleQRCodeScanned}
               photo={true}
               isActive={true}
             />
           )}
 
-          <View style={settingsStyle.row}>
-            {modalProps.type === 'scan' &&
-              (scanningCode ? (
-                <ActivityIndicator color={APP_PRIMARY} />
-              ) : (
-                <Button
-                  title={'Skeniraj'}
-                  color={APP_PRIMARY}
-                  onPress={handleQRCodeScanned}
-                />
-              ))}
-
-            <Button
-              title={'Zatvori'}
-              color={APP_DARK}
-              onPress={() => setModalProps({visible: false, type: undefined})}
-            />
-          </View>
-
-          {!!scanError && <BodyText color={'danger'}>{scanError}</BodyText>}
+          <TouchableOpacity
+            onPress={handleModalClose}
+            style={settingsStyle.closeButton}>
+            <MaterialIcons name={'close'} size={30} color={'white'} />
+          </TouchableOpacity>
         </View>
       </Modal>
     </ScrollView>

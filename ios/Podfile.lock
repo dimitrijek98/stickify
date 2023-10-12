@@ -733,9 +733,6 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleMLKit/BarcodeScanning (4.0.0):
-    - GoogleMLKit/MLKitCore
-    - MLKitBarcodeScanning (~> 3.0.0)
   - GoogleMLKit/MLKitCore (4.0.0):
     - MLKitCommon (~> 9.0.0)
   - GoogleMLKit/TextRecognition (4.0.0):
@@ -842,9 +839,6 @@ PODS:
   - leveldb-library (1.22.2)
   - libevent (2.1.12)
   - MLImage (1.0.0-beta4)
-  - MLKitBarcodeScanning (3.0.0):
-    - MLKitCommon (~> 9.0)
-    - MLKitVision (~> 5.0)
   - MLKitCommon (9.0.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
@@ -1317,9 +1311,6 @@ PODS:
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
     - RNFBApp
-  - RNMLKitBarcodeScanning (1.3.0):
-    - GoogleMLKit/BarcodeScanning (= 4.0.0)
-    - React
   - RNMLKitTextRecognition (1.3.0):
     - GoogleMLKit/TextRecognition (= 4.0.0)
     - GoogleMLKit/TextRecognitionChinese (= 4.0.0)
@@ -1366,7 +1357,7 @@ PODS:
   - RNVectorIcons (10.0.0):
     - React-Core
   - SocketRocket (0.6.1)
-  - VisionCamera (3.1.0):
+  - VisionCamera (3.3.1):
     - React
     - React-callinvoker
     - React-Core
@@ -1444,7 +1435,6 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
-  - "RNMLKitBarcodeScanning (from `../node_modules/@react-native-ml-kit/barcode-scanning`)"
   - "RNMLKitTextRecognition (from `../node_modules/@react-native-ml-kit/text-recognition`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1456,7 +1446,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - abseil
     - BoringSSL-GRPC
     - CocoaAsyncSocket
     - Firebase
@@ -1475,7 +1464,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - MLImage
-    - MLKitBarcodeScanning
     - MLKitTextRecognition
     - MLKitTextRecognitionChinese
     - MLKitTextRecognitionCommon
@@ -1590,8 +1578,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
-  RNMLKitBarcodeScanning:
-    :path: "../node_modules/@react-native-ml-kit/barcode-scanning"
   RNMLKitTextRecognition:
     :path: "../node_modules/@react-native-ml-kit/text-recognition"
   RNReanimated:
@@ -1643,7 +1629,6 @@ SPEC CHECKSUMS:
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
-  MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
   MLKitTextRecognition: 9ff0c843f2723d31d4bdd0c0d17a0a18382ed23e
   MLKitTextRecognitionChinese: 1c2d90260b0ee2b5541bb6ce3b60fa5fed66a2a5
@@ -1693,7 +1678,6 @@ SPEC CHECKSUMS:
   RNDeviceInfo: bf8a32acbcb875f568217285d1793b0e8588c974
   RNFBApp: cc9384746945ac0eedd4759171a8abb4c4c5309d
   RNFBFirestore: efd8996a791bb9edbd0a3b3acfd80d7a60d9a1d9
-  RNMLKitBarcodeScanning: e787b4653f19c32db49a1825738f2cf9cc5fff09
   RNMLKitTextRecognition: b2ba09361f084db39655346a65d4c07327a34afd
   RNReanimated: ab2e96c6d5591c3dfbb38a464f54c8d17fb34a87
   RNScreens: 85d3880b52d34db7b8eeebe2f1a0e807c05e69fa
@@ -1701,7 +1685,7 @@ SPEC CHECKSUMS:
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  VisionCamera: 5716d5c3f2e5cbcf0e58e30e91b09b2fbb1f12ef
+  VisionCamera: f649cd0c0fa6266f1cd5e0787a7c9583ca143b3a
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

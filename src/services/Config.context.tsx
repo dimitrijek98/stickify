@@ -196,6 +196,12 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   const setConnectedApp = (appId: string) => {
     setConnectedAppId(appId);
     AsyncStorage.setItem(CONNECTED_APP_ID, appId);
+    Toast.show({
+      position: 'bottom',
+      type: 'success',
+      text1: 'Album povezan',
+      text2: 'Uspešno ste povezali album sa drugim korisnikom',
+    });
   };
 
   return (

@@ -31,5 +31,10 @@ export const settingsStyle = StyleSheet.create({
     width: 250,
     height: 400,
   },
+  closeButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+  },
   modalText: {textAlign: 'center'},
 });
