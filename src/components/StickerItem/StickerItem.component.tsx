@@ -1,4 +1,4 @@
-import {Sticker} from 'services/Config.context';
+import {Sticker} from 'services/AlbumContext';
 import React, {FC, useMemo} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {stickerItemStyles} from 'components/StickerItem/StickerItem.styles';

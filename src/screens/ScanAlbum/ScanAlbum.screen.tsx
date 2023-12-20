@@ -5,7 +5,7 @@ import {
   TextRecognitionResult,
 } from '@react-native-ml-kit/text-recognition';
 import {trimLineBreaks} from '_shared/helpers/trimLineBreaks';
-import {ConfigContext} from 'services/Config.context';
+import {AlbumContext} from 'services/AlbumContext';
 import {ScreenProps} from '_shared/types/ScreenProps';
 import {getStickerData} from '_shared/helpers/getStickerData';
 import {getAlbumGroup} from '_shared/helpers/getAlbumData';
@@ -19,7 +19,7 @@ const ScanAlbumScreen: FC<ScreenProps<'ScanAlbum'>> = ({navigation}) => {
     stickerNumberRegex,
     stickerGroupRegex,
     changeAlbumSection,
-  } = useContext(ConfigContext);
+  } = useContext(AlbumContext);
   const [detectedStickers, setDetectedStickers] = useState<string[]>([]);
   const [detectedStickerGroup, setDetectedStickerGroup] = useState('');
   const [updatingAlbum, setUpdatingAlbum] = useState(false);

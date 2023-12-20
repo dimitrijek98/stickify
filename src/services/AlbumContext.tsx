@@ -22,7 +22,7 @@ export type AlbumSection = Record<string, Sticker>;
 
 export type Album = Record<string, AlbumSection>;
 
-export type ConfigType = {
+export type AlbumContextType = {
   stickerValueRegex: RegExp;
   stickerNumberRegex: RegExp;
   stickerGroupRegex: RegExp;
@@ -42,7 +42,7 @@ const defaultAlbum: Album = {};
 const ALBUM_STORAGE_KEY = 'saved_album';
 const CONNECTED_APP_ID = 'connected_app_id';
 
-export const ConfigContext = createContext<ConfigType>({
+export const AlbumContext = createContext<AlbumContextType>({
   stickerValueRegex: defaultRegex,
   stickerNumberRegex: defaultRegex,
   stickerGroupRegex: defaultRegex,
@@ -55,7 +55,7 @@ export const ConfigContext = createContext<ConfigType>({
   setConnectedApp: () => {},
 });
 
-const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
+const AlbumContextProvider: FC<{children: ReactNode}> = ({children}) => {
   const {
     album,
     stickerValuesExpression,
@@ -205,7 +205,7 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
   };
 
   return (
-    <ConfigContext.Provider
+    <AlbumContext.Provider
       value={{
         album: albumData,
         albumKeysOrder: albumKeyOrder,
@@ -219,8 +219,8 @@ const ConfigContextProvider: FC<{children: ReactNode}> = ({children}) => {
         setConnectedApp: setConnectedApp,
       }}>
       {children}
-    </ConfigContext.Provider>
+    </AlbumContext.Provider>
   );
 };
 
-export default ConfigContextProvider;
+export default AlbumContextProvider;

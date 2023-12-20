@@ -1,4 +1,4 @@
-import {AlbumSection, ConfigContext} from 'services/Config.context';
+import {AlbumSection, AlbumContext} from 'services/AlbumContext';
 import React, {FC, useContext} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import StickerItem from 'components/StickerItem/StickerItem.component';
@@ -11,7 +11,7 @@ type AlbumSectionProps = {
 };
 
 const AlbumSectionList: FC<AlbumSectionProps> = ({section, sectionName}) => {
-  const {toggleStickerCollected} = useContext(ConfigContext);
+  const {toggleStickerCollected} = useContext(AlbumContext);
 
   const handleOnStickerClick = (stickerNumber: string) => {
     toggleStickerCollected(componseStickerValue(sectionName, stickerNumber));

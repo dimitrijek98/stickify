@@ -8,7 +8,7 @@
 import React from 'react';
 
 import HomeScreen from 'screens/home/Home.screen';
-import ConfigContextProvider from 'services/Config.context';
+import AlbumContextProvider from 'services/AlbumContext';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AlbumPage from 'screens/Album/Album.page';
@@ -27,7 +27,7 @@ const toastConfig: ToastConfig = {
 };
 function App(): JSX.Element {
   return (
-    <ConfigContextProvider>
+    <AlbumContextProvider>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -55,7 +55,7 @@ function App(): JSX.Element {
         </Stack.Navigator>
       </NavigationContainer>
       <Toast config={toastConfig} />
-    </ConfigContextProvider>
+    </AlbumContextProvider>
   );
 }
 

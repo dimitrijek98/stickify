@@ -1,6 +1,6 @@
 import React, {FC, useCallback} from 'react';
 import {useMemo} from 'react';
-import {Album} from 'services/Config.context';
+import {Album} from 'services/AlbumContext';
 import {APP_GRAY, APP_PRIMARY} from '_shared/theme/appColors';
 import PieChart from 'react-native-pie-chart';
 import {Button, Share, StyleSheet, Text, View} from 'react-native';

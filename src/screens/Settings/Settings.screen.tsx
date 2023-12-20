@@ -19,7 +19,7 @@ import {
   useCameraDevice,
   useCodeScanner,
 } from 'react-native-vision-camera';
-import {ConfigContext} from 'services/Config.context';
+import {AlbumContext} from 'services/AlbumContext';
 import StatsComponent from 'components/Stats/Stats.component';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -30,7 +30,7 @@ type ModalProps = {
 
 const SettingsScreen: FC<ScreenProps<'Settings'>> = () => {
   const cameraDevice = useCameraDevice('back');
-  const {album, setAlbumState, setConnectedApp} = useContext(ConfigContext);
+  const {album, setAlbumState, setConnectedApp} = useContext(AlbumContext);
   const camera = useRef<Camera>(null);
   const [modalProps, setModalProps] = useState<ModalProps>({
     visible: false,

@@ -1,6 +1,6 @@
 import React, {FC, useContext, useState} from 'react';
 import {ScreenProps} from '_shared/types/ScreenProps';
-import {ConfigContext} from 'services/Config.context';
+import {AlbumContext} from 'services/AlbumContext';
 import {
   TextBlock,
   TextRecognitionResult,
@@ -11,7 +11,7 @@ import {getStickerData} from '_shared/helpers/getStickerData';
 import OverlayLoaderComponent from 'components/OverlayLoader/OverlayLoader.component';
 
 const ScanStickerScreen: FC<ScreenProps<'ScanSticker'>> = ({navigation}) => {
-  const {album, stickerValueRegex, addNewStickers} = useContext(ConfigContext);
+  const {album, stickerValueRegex, addNewStickers} = useContext(AlbumContext);
   const [detectedStickers, setDetectedStickers] = useState<string[]>([]);
   const [updatingAlbum, setUpdatingAlbum] = useState(false);
 
